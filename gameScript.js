@@ -9,6 +9,8 @@ const winningCombos = [
     [2, 4, 6]
 ];
 
+let xScoreTally = 0;
+let oScoreTally = 0;
 
 const handleCellClick = e => {
     const cell = e.target;
@@ -25,6 +27,16 @@ const handleCellClick = e => {
     const winner = checkForWin();
     if (winner) {
         gameMessage.textContent = `${winner} wins!`;
+
+        if(winner === 'X') {
+            xScoreTally++;
+        } else {
+            oScoreTally++;
+        }
+
+        xScore.textContent = `X: ${xScoreTally}`;
+        oScore.textContent = `O: ${oScoreTally}`;
+        
         return;
     }
 
@@ -34,6 +46,15 @@ const handleCellClick = e => {
         const aiWins = checkForWin();
         if (aiWins) {
             gameMessage.textContent = `${aiWins} wins!`;
+
+            if (aiWins === 'X') {
+                xScoreTally++;
+            } else {
+                oScoreTally++;
+            }
+    
+            xScore.textContent = `X: ${xScoreTally}`;
+            oScore.textContent = `O: ${oScoreTally}`;
         }
 
         if (isDraw()) {
@@ -51,6 +72,8 @@ const squares = document.querySelectorAll('.cell');
 squares.forEach(square => square.addEventListener('click', handleCellClick));
 const restartButton = document.querySelector('.game-restart').addEventListener('click', handleRestartClick);
 const gameMessage = document.querySelector('.game-message');
+const xScore = document.querySelector('.game-score-x');
+const oScore = document.querySelector('.game-score-o');
 
 // AI logic to place 'O'
 const placeO = () => {
